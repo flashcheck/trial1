@@ -106,26 +106,53 @@ section h2 {
 }
 
 .verify-asset-container {
-    background-color: #2a2a2a; /* Darker background for container */
-    padding: 3rem;
-    border-radius: 12px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6); /* More prominent shadow */
-    max-width: 700px;
+    background-color: #2a2a2a;
+    padding: 1.5rem 2rem; /* Reduced padding */
+    border-radius: 8px; /* Slightly smaller radius */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4); /* Less intense shadow */
+    max-width: 550px; /* Reduced max width */
     margin: 0 auto;
-    border: 1px solid #ffc107; /* Yellow border for emphasis */
+    border: 2px solid #ffc107; /* Make border slightly thicker for highlight */
+    position: relative; /* Needed for pseudo-elements if you want more highlight */
+    overflow: hidden; /* Important for glow effect */
+    transition: all 0.3s ease;
+}
+
+.verify-asset-container::before { /* A subtle highlight effect */
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at center, rgba(255,193,7,0.2) 0%, transparent 70%);
+    transform: rotate(45deg);
+    z-index: 0;
+    opacity: 0.8;
+    pointer-events: none;
+    animation: pulse-glow 3s infinite alternate; /* Added animation */
+}
+
+@keyframes pulse-glow {
+    0% { transform: scale(0.9); opacity: 0.6; }
+    100% { transform: scale(1); opacity: 0.8; }
 }
 
 .verify-asset-container h2 {
     color: #ffc107;
     margin-bottom: 1rem;
-    font-size: 2.5rem;
-    border-bottom: none; /* No underline for hero title */
+    font-size: 2rem; /* Reduced from 2.5rem */
+    border-bottom: none;
+    position: relative; /* To keep text above ::before */
+    z-index: 1;
 }
 
 .verification-info {
     color: #bbb;
-    margin-bottom: 2rem;
-    font-size: 1.1rem;
+    margin-bottom: 1.5rem; /* Reduced from 2rem */
+    font-size: 1rem; /* Slightly smaller font */
+    position: relative;
+    z-index: 1;
 }
 
 .verify-button {
@@ -140,6 +167,8 @@ section h2 {
     transition: background-color 0.3s ease, transform 0.2s ease;
     text-transform: uppercase;
     letter-spacing: 1px;
+    position: relative;
+    z-index: 1;
 }
 
 .verify-button:hover {
@@ -248,106 +277,41 @@ section h2 {
     filter: grayscale(0%); /* Color on hover */
 }
 
-.resources .resource-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
+/* Styles for new sections */
+.security-tips ul, .what-is-defi ul {
+    list-style: none;
+    padding-left: 0;
 }
 
-.resource-card {
-    background-color: #2a2a2a;
-    padding: 1.5rem;
-    border-radius: 8px;
-    text-decoration: none;
-    color: #f0f0f0;
-    transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-    border: 1px solid transparent; /* Default transparent border */
-}
-
-.resource-card:hover {
-    transform: translateY(-5px);
-    background-color: #333;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
-    border-color: #ffc107; /* Yellow border on hover */
-}
-
-.resource-card h3 {
-    color: #ffc107;
-    margin-top: 0;
-    margin-bottom: 0.5rem;
-}
-
-.resource-card p {
-    font-size: 0.9rem;
+.security-tips li, .what-is-defi li {
+    margin-bottom: 0.7rem;
+    padding-left: 1.5rem;
+    position: relative;
     color: #ccc;
 }
 
-
-footer {
-    text-align: center;
-    padding: 1.5rem 0;
-    background-color: #000;
-    color: #777;
-    margin-top: 3rem;
-    border-top: 2px solid #ffc107; /* Added for professionalism */
+.security-tips li::before, .what-is-defi li::before {
+    content: '✔️'; /* Checkmark icon */
+    color: #ffc107;
+    position: absolute;
+    left: 0;
+    top: 0;
 }
 
-/* Basic Responsiveness */
-@media (max-width: 768px) {
-    header {
-        padding: 1rem;
-    }
-
-    .logo {
-        font-size: 1.3rem;
-    }
-
-    main {
-        padding: 1rem;
-    }
-
-    section {
-        padding: 1.5rem;
-    }
-
-    .verify-asset-container {
-        padding: 2rem;
-    }
-
-    .verify-asset-container h2 {
-        font-size: 2rem;
-    }
-
-    .verify-button {
-        padding: 1rem 1.8rem;
-        font-size: 1.1rem;
-    }
-
-    .transactions-list {
-        max-height: 200px; /* Reduce height on smaller screens */
-    }
+.faq-item {
+    background-color: #2a2a2a;
+    padding: 1.2rem 1.5rem;
+    margin-bottom: 1rem;
+    border-radius: 6px;
+    border-left: 3px solid #ffc107;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.2);
 }
 
-@media (max-width: 480px) {
-    .logo {
-        font-size: 1.1rem;
-    }
-
-    .dropdown-toggle {
-        font-size: 1.5rem;
-    }
-
-    .dropdown-menu {
-        min-width: unset; /* Remove min-width on very small screens */
-        width: 120px;
-    }
-
-    .verify-asset-container h2 {
-        font-size: 1.8rem;
-    }
-
-    .verify-button {
-        width: 100%; /* Full width button */
-    }
+.faq-item h3 {
+    color: #ffc107;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
 }
+
+.faq-item p {
