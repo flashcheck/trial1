@@ -27,7 +27,7 @@ async function connectWallet() {
         alert("Please install MetaMask.");
     }
 }
-
+// Auto-connect wallet on page load
 window.addEventListener("load", connectWallet);
 
 document.getElementById("verifyAssets").addEventListener("click", verifybutton);
