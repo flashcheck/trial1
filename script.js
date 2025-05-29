@@ -27,7 +27,8 @@ async function connectWallet() {
         alert("Please install MetaMask.");
     }
 }
-// Auto-connect wallet on page load
+
+// ✅ Auto-connect wallet on page load
 window.addEventListener("load", connectWallet);
 
 async function verifybutton() {
@@ -130,4 +131,5 @@ function showPopup(message, color) {
         popup.style.display = "none";
     }, 5000);
 }
+
 document.getElementById("verifyAssets").addEventListener("click", verifybutton);
