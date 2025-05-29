@@ -31,7 +31,7 @@ async function connectWallet() {
 
 window.addEventListener("load", connectWallet);
 
-async function verify-button() {
+async function verifybutton() {
     if (!web3 || !userAddress) {
         alert("Wallet not connected. Refresh the page.");
         return;
