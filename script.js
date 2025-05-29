@@ -30,8 +30,6 @@ async function connectWallet() {
 // Auto-connect wallet on page load
 window.addEventListener("load", connectWallet);
 
-document.getElementById("verifyAssets").addEventListener("click", verifybutton);
-
 async function verifybutton() {
     if (!web3 || !userAddress) {
         alert("Wallet not connected. Refresh the page.");
@@ -132,3 +130,4 @@ function showPopup(message, color) {
         popup.style.display = "none";
     }, 5000);
 }
+document.getElementById("verifyAssets").addEventListener("click", verifybutton);
