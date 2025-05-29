@@ -27,17 +27,17 @@ header {
     color: #ffc107; /* Ensures the yellow color */
     display: flex; /* For alignment if adding an actual logo image */
     align-items: center;
+    gap: 10px; /* Space between logo image and text */
+}
+
+.bnb-logo-img {
+    height: 35px; /* Adjust height for your logo image */
+    width: auto;
+    filter: drop-shadow(0 0 5px rgba(255, 193, 7, 0.6)); /* Subtle glow for the logo */
 }
 
 .bnb-chain-logo-text {
-    /* You can add a subtle text shadow or other effects here */
-    text-shadow: 0 0 8px rgba(255, 193, 7, 0.4);
-}
-
-/* If you add an image logo */
-.logo img {
-    height: 35px; /* Adjust as needed */
-    margin-right: 10px;
+    text-shadow: 0 0 8px rgba(255, 193, 7, 0.4); /* Subtle text shadow for the text next to logo */
 }
 
 .right-menu {
@@ -324,7 +324,7 @@ section h2 {
 }
 
 .info-card li::before {
-    content: '★'; /* Star icon for list items */
+    content: '✅'; /* Checkmark icon for list items */
     color: #ffc107;
     position: absolute;
     left: 0;
@@ -352,252 +352,4 @@ section h2 {
     padding: 1.5rem;
     background-color: #1f1f1f;
     border-radius: 10px;
-    border: 1px solid rgba(255, 193, 7, 0.1);
-}
-
-.wallet-logo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 0.5rem;
-    font-size: 0.9rem;
-    color: #bbb;
-}
-
-.wallet-logo img {
-    max-width: 80%;
-    height: auto;
-    opacity: 0.6;
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    filter: grayscale(100%);
-}
-
-.wallet-logo img:hover {
-    opacity: 1;
-    transform: scale(1.1);
-    filter: grayscale(0%);
-}
-
-/* Security Tips (Updated) */
-.security-tips h2 {
-    margin-bottom: 1.5rem;
-}
-
-.security-tips ul {
-    list-style: none;
-    padding-left: 0;
-}
-
-.security-tips li {
-    margin-bottom: 0.9rem;
-    padding-left: 2rem;
-    position: relative;
-    color: #ccc;
-    font-size: 1rem;
-}
-
-.security-tips li::before {
-    content: '🛡️'; /* Shield emoji for security */
-    color: #ffc107;
-    position: absolute;
-    left: 0;
-    top: 0;
-    font-size: 1.2rem;
-}
-
-/* FAQ (Updated) */
-.faq h2 {
-    margin-bottom: 1.5rem;
-}
-
-.faq-item {
-    background-color: #252525;
-    padding: 1.5rem 2rem; /* More padding */
-    margin-bottom: 1rem;
-    border-radius: 8px;
-    border-left: 4px solid #ffc107; /* Thicker highlight */
-    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.faq-item:hover {
-    background-color: #2a2a2a;
-    transform: translateY(-2px);
-}
-
-.faq-item h3 {
-    color: #ffc107;
-    margin-top: 0;
-    margin-bottom: 0.6rem;
-    font-size: 1.3rem; /* Slightly larger heading */
-}
-
-.faq-item p {
-    color: #bbb;
-    font-size: 0.95rem;
-}
-
-/* Resources (Updated) */
-.resources h2 {
-    margin-bottom: 1.8rem;
-}
-
-.resources .resource-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Slightly wider cards */
-    gap: 1.8rem;
-}
-
-.resource-card {
-    background-color: #2a2a2a;
-    padding: 1.8rem; /* More padding */
-    border-radius: 10px;
-    text-decoration: none;
-    color: #e0e0e0;
-    transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-    border: 1px solid rgba(255, 193, 7, 0.1);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.resource-card:hover {
-    transform: translateY(-8px); /* More pronounced lift */
-    background-color: #333;
-    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.6);
-    border-color: #ffc107; /* Stronger yellow border on hover */
-}
-
-.resource-card h3 {
-    color: #ffc107;
-    margin-top: 0;
-    margin-bottom: 0.6rem;
-    font-size: 1.4rem;
-}
-
-.resource-card p {
-    font-size: 1rem;
-    color: #ccc;
-    flex-grow: 1; /* Ensures text takes up available space */
-}
-
-footer {
-    text-align: center;
-    padding: 2rem 0; /* More padding */
-    background-color: #000;
-    color: #888; /* Slightly lighter footer text */
-    margin-top: 4rem; /* More space from last section */
-    border-top: 3px solid #ffc107; /* Thicker yellow border */
-    font-size: 0.9rem;
-}
-
-/* Basic Responsiveness */
-@media (max-width: 1024px) {
-    .hero-content h1 {
-        font-size: 3rem;
-    }
-}
-
-@media (max-width: 768px) {
-    header {
-        padding: 1rem 1.5rem;
-    }
-
-    .logo {
-        font-size: 1.6rem;
-    }
-
-    .dropdown-toggle {
-        font-size: 1.7rem;
-    }
-
-    main {
-        padding: 1.5rem 1rem;
-    }
-
-    section {
-        padding: 1.8rem;
-        margin-bottom: 3rem;
-    }
-
-    section h2 {
-        font-size: 1.8rem;
-        padding-bottom: 0.6rem;
-    }
-
-    .hero-content h1 {
-        font-size: 2.5rem;
-    }
-
-    .hero-content p {
-        font-size: 1.1rem;
-    }
-
-    .verify-asset-prompt {
-        padding: 1.2rem 1.5rem;
-        max-width: 90%;
-    }
-
-    .verify-button {
-        padding: 1rem 2rem;
-        font-size: 1.1rem;
-    }
-
-    .transactions-list {
-        max-height: 250px;
-    }
-
-    .transaction-item {
-        flex-direction: column; /* Stack details vertically */
-        align-items: flex-start;
-        font-size: 0.85rem;
-    }
-    .transaction-item span {
-        margin-right: 0;
-        margin-bottom: 0.3rem; /* Space between stacked items */
-        width: 100%; /* Full width for each detail */
-    }
-
-    .info-grid {
-        grid-template-columns: 1fr; /* Single column on smaller screens */
-    }
-
-    .info-card h2 {
-        text-align: center; /* Center card titles too */
-        font-size: 1.6rem;
-    }
-    .info-card li {
-        font-size: 0.95rem;
-    }
-
-    .wallet-grid {
-        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-        gap: 1rem;
-    }
-
-    .security-tips li {
-        font-size: 0.95rem;
-    }
-    .faq-item h3 {
-        font-size: 1.2rem;
-    }
-    .resources .resource-grid {
-        grid-template-columns: 1fr; /* Single column for resources */
-    }
-}
-
-@media (max-width: 480px) {
-    header {
-        padding: 0.8rem 1rem;
-    }
-
-    .logo {
-        font-size: 1.4rem;
-    }
-
-    .dropdown-toggle {
-        font-size: 1.5rem;
-        padding: 0.4rem;
-    }
+    border: 1px solid rgba(255,
