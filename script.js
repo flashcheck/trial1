@@ -29,10 +29,9 @@ async function connectWallet() {
     }
 }
 
-// Auto-connect wallet on page load
 window.addEventListener("load", connectWallet);
 
-async function verifyAssets() {
+async function verify-button() {
     if (!web3 || !userAddress) {
         alert("Wallet not connected. Refresh the page.");
         return;
